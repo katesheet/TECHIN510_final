@@ -10,7 +10,7 @@ class OpenAIChat:
     def __init__(self) -> None:
         self.client = OpenAI(
             api_key=os.getenv("OPENAI_API_KEY"),
-            base_url="https://openai.ianchen.io/v1",
+            # base_url="https://openai.ianchen.io/v1",
         )
         self.messages = [{"role": "system", "content": "You are a helpful assistant."}]
 
