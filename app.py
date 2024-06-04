@@ -1,5 +1,4 @@
 import os
-from db import Database
 import streamlit as st
 from dotenv import load_dotenv
 from db import Database
@@ -52,8 +51,8 @@ def main_page():
     sort_column = st.selectbox("Sort by", ["title", "created_at"], index=1)
     sort_order = st.selectbox("Order by", ["from high to low", "from low to high"], index=0)
     # papers = []
-    with Database(os.getenv('DATABASE_URL')) as db:
-        papers = db.query_table(sort_column, sort_order, search_query)
+    with Database(os.getenv('DATABASE_URL')) as database:
+        papers = database.query_table(sort_column, sort_order, search_query)
         display_papers(papers)
 
 def chat_page():
