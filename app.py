@@ -37,6 +37,7 @@ def display_papers(papers):
                 if st.button('Chat with this paper!', key=hash(p)):
                     st.session_state['page'] = 'Chat'
                     st.session_state['paper'] = p
+                    st.session_stat['chat'] = OpenAIChat()
                     # st.session_state['id'] = p.id
                     st.rerun()
                     # st.session_state['data'] = p.get_paper()
@@ -58,11 +59,14 @@ def main_page():
 def chat_page():
     if st.button('Go back to Main Page'):
         st.session_state['page'] = 'Main'
+        st.session_state['chat'] = None
+        st.session_state['paper'] = None
         st.rerun()
     paper = st.session_state['paper']
-    chat = OpenAIChat()
+    chat = st.session_state['chat']
     st.title(paper.title)
-    chat.get_response('summarize the paper 100 words: '+ paper.get_paper())
+    if len(chat.messages) == 1:
+        chat.get_response('summarize the paper 100 words: '+ paper.get_paper())
     idx = 0
     
     for res in chat.messages[2:]:
@@ -80,6 +84,8 @@ if 'page' not in st.session_state:
     st.session_state['page'] = 'Main'
 if 'paper' not in st.session_state:
     st.session_state['paper'] = None
+if 'chat' not in st.session_state:
+    st.session_state['chat'] = None
 
 
 if st.session_state['page'] == 'Main':
