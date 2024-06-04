@@ -35,7 +35,7 @@ class Database:
 
     def query_table(self, search_query=None, sort_column=None, sort_order=None):
         query = "SELECT id, title, created_at FROM papers "
-
+        # self.cur.execute(query)
         if search_query:
             query += " WHERE "
             query += "title LIKE %s"
@@ -46,8 +46,8 @@ class Database:
         elif sort_column:
             query += f" ORDER BY {sort_column} "
             query += "DESC" if sort_order != "from low to high" else "ASC"
-            self.cur.execute(query + ' ')
+            self.cur.execute(query)
         else:
-            self.cur.execute(query + ' ')
+            self.cur.execute(query)
 
         return self.cur.fetchall()

@@ -37,7 +37,7 @@ def display_papers(papers):
                 if st.button('Chat with this paper!', key=hash(p)):
                     st.session_state['page'] = 'Chat'
                     st.session_state['paper'] = p
-                    st.session_stat['chat'] = OpenAIChat()
+                    st.session_state['chat'] = OpenAIChat()
                     # st.session_state['id'] = p.id
                     st.rerun()
                     # st.session_state['data'] = p.get_paper()
