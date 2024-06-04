@@ -33,7 +33,7 @@ class Database:
         self.cur.execute(q, (paper.id, paper.title))
         self.con.commit()
 
-    def query_table(self, search_query, sort_column, sort_order):
+    def query_table(self, sort_column, sort_order, search_query=None):
         query = "SELECT id, title, created_at FROM papers "
         # self.cur.execute(query)
         if search_query:

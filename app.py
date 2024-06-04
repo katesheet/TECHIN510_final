@@ -53,7 +53,7 @@ def main_page():
     sort_order = st.selectbox("Order by", ["from high to low", "from low to high"], index=0)
     # papers = []
     with Database(os.getenv('DATABASE_URL')) as db:
-        papers = db.query_table(search_query if search_query else None, sort_column, sort_order)
+        papers = db.query_table(sort_column, sort_order, search_query)
         display_papers(papers)
 
 def chat_page():
@@ -67,15 +67,16 @@ def chat_page():
     st.title(paper.title)
     if len(chat.messages) == 1:
         chat.get_response('summarize the paper 100 words: '+ paper.get_paper())
-        
+
     for res in chat.messages[2:]:
-        st.markdown(f'{res["role"]}: {res["content"]}')
+        st.markdown(f'# **{res["role"]}**:\n{res["content"]}')
     prompt = st.chat_input("Have a chat with the paper!")
     if prompt:
         # st.write(f"User: {prompt}")
         chat.get_response(prompt)
-        for res in chat.messages[2:]:
-            st.markdown(f'{res["role"]}: {res["content"]}')
+        st.rerun()
+        # for res in chat.messages[2:]:
+        #     st.markdown(f'{res["role"]}: {res["content"]}')
     
 
 
